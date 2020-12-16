@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
+    title: `Gatsby Blog Sample`,
+    description: `Just simple blog website as a sample`,
     author: `@gatsbyjs`,
   },
   plugins: [
@@ -28,8 +28,13 @@ module.exports = {
       },
     },
     `gatsby-plugin-ts-config`,
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    // `gatsby-plugin-offline`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/src/posts`,
+        name: "posts",
+      },
+    },
+    `gatsby-transformer-remark`,
   ],
 }
