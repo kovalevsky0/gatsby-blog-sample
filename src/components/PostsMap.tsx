@@ -3,18 +3,16 @@ import { useStaticQuery, graphql, Link } from "gatsby"
 import { PostsQueryResult } from "../types"
 
 const POST_QUERY = graphql`
-  query BlogPosts {
+  query BlogPostsMap {
     allMarkdownRemark(
       limit: 6
       sort: { order: DESC, fields: [frontmatter___date] }
     ) {
       edges {
         node {
-          excerpt
           frontmatter {
             title
             slug
-            date(formatString: "DD-MM-YYYY")
           }
         }
       }
@@ -22,27 +20,18 @@ const POST_QUERY = graphql`
   }
 `
 
-const Posts = () => {
+const PostsMap = () => {
   const { allMarkdownRemark } = useStaticQuery<PostsQueryResult>(POST_QUERY)
 
   return (
     <>
       <aside>
-        <h1>Posts</h1>
+        <h2>See Also</h2>
         {allMarkdownRemark.edges.map(({ node }) => (
           <div key={node.frontmatter.slug}>
-            <h3>
-              <Link to={`/posts${node.frontmatter.slug}`}>
-                {node.frontmatter.title}
-              </Link>
-            </h3>
-            <p>
-              Date:{" "}
-              <time dateTime={node.frontmatter.date}>
-                {node.frontmatter.date}
-              </time>
-            </p>
-            <p>{node.excerpt}</p>
+            <Link to={`/posts${node.frontmatter.slug}`}>
+              <h3>{node.frontmatter.title}</h3>
+            </Link>
           </div>
         ))}
       </aside>
@@ -50,4 +39,4 @@ const Posts = () => {
   )
 }
 
-export default Posts
+export default PostsMap

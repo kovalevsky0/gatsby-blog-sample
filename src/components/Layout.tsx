@@ -1,12 +1,15 @@
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
+import { useLocation } from "@reach/router"
 
 import Header from "./Header"
-import Posts from "./Posts"
+import PostsMap from "./PostsMap"
 
 import "./layout.css"
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
+  const location = useLocation()
+
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -32,7 +35,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <p>{data.site.siteMetadata?.description}</p>
         )}
         <main>{children}</main>
-        <Posts />
+        {location.pathname.includes("/posts") && <PostsMap />}
         <footer
           style={{
             marginTop: `2rem`,

@@ -5,12 +5,12 @@ import Layout from "./Layout"
 import { PostLayoutProps } from "../types"
 
 export const query = graphql`
-  query BlogPost {
-    markdownRemark(frontmatter: { slug: { eq: "/greetings-post" } }) {
+  query BlogPostQuery($slug: String!) {
+    markdownRemark(frontmatter: { slug: { eq: $slug } }) {
       html
       frontmatter {
         title
-        date
+        date(formatString: "DD.MM.YYYY")
       }
     }
   }
@@ -25,7 +25,11 @@ const PostLayout = ({ data: { markdownRemark } }: PostLayoutProps) => {
           {markdownRemark.frontmatter.date}
         </time>
       </p>
-      <div>{markdownRemark.html}</div>
+      <div
+        dangerouslySetInnerHTML={{
+          __html: markdownRemark.html,
+        }}
+      ></div>
     </Layout>
   )
 }
