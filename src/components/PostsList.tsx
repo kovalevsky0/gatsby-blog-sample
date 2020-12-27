@@ -50,20 +50,26 @@ const PostBlock = styled.article`
 const PostsList = () => {
   const data = useStaticQuery<PostsQueryResult>(POSTS_LIST_QUERY)
 
-  return data.allMarkdownRemark.edges.map(({ node }) => (
-    <PostBlock key={node.frontmatter.slug}>
-      <Link to={`/posts${node.frontmatter.slug}`}>
-        <h2>{node.frontmatter.title}</h2>
-      </Link>
-      <p>
-        <time dateTime={node.frontmatter.date}>{node.frontmatter.date}</time>
-      </p>
-      <p>
-        {node.excerpt}{" "}
-        <Link to={`/posts${node.frontmatter.slug}`}>Read more</Link>
-      </p>
-    </PostBlock>
-  ))
+  return (
+    <>
+      {data.allMarkdownRemark.edges.map(({ node }) => (
+        <PostBlock key={node.frontmatter.slug}>
+          <Link to={`/posts${node.frontmatter.slug}`}>
+            <h2>{node.frontmatter.title}</h2>
+          </Link>
+          <p>
+            <time dateTime={node.frontmatter.date}>
+              {node.frontmatter.date}
+            </time>
+          </p>
+          <p>
+            {node.excerpt}{" "}
+            <Link to={`/posts${node.frontmatter.slug}`}>Read more</Link>
+          </p>
+        </PostBlock>
+      ))}
+    </>
+  )
 }
 
 export default PostsList
