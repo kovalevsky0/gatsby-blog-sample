@@ -31,7 +31,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           description
         }
       }
-      file(relativePath: { regex: "/bg.png/" }) {
+      file(relativePath: { regex: "/bg/" }) {
         childImageSharp {
           fluid(maxWidth: 1000) {
             ...GatsbyImageSharpFluid
