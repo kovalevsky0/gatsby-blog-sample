@@ -6,7 +6,6 @@ import logo from "../images/yellow-book.svg"
 
 const HeaderContainer = styled.div`
   background: #333;
-  margin-bottom: 1.45rem;
 `
 
 const HeaderContent = styled.div`

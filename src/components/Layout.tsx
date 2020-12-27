@@ -3,6 +3,7 @@ import { useStaticQuery, graphql } from "gatsby"
 import Img from "gatsby-image"
 import { useLocation } from "@reach/router"
 import styled from "styled-components"
+import { useSpring, animated } from "react-spring"
 
 import Header from "./Header"
 import PostsMap from "./PostsMap"
@@ -12,6 +13,11 @@ import "./layout.css"
 const LayoutContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
+`
+
+const Description = styled.div`
+  padding: 1.5rem 1rem;
+  font-style: italic;
 `
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -25,7 +31,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           description
         }
       }
-      file(relativePath: { regex: "/bg-post/" }) {
+      file(relativePath: { regex: "/bg.png/" }) {
         childImageSharp {
           fluid(maxWidth: 1000) {
             ...GatsbyImageSharpFluid
@@ -35,12 +41,21 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     }
   `)
 
+  const props = useSpring({
+    from: {
+      height: 400,
+    },
+    to: { height: location.pathname === "/" ? 500 : 0 },
+  })
+
   return (
     <>
       <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
-      <Img fluid={data.file.childImageSharp.fluid}></Img>
+      <animated.div style={{ overflow: "hidden", ...props }}>
+        <Img fluid={data.file.childImageSharp.fluid} />
+      </animated.div>
       <LayoutContainer>
-        <p>{data.site.siteMetadata?.description}</p>
+        <Description>{data.site.siteMetadata?.description}</Description>
         <main>{children}</main>
         {location.pathname.includes("/posts") && <PostsMap />}
         <footer
