@@ -16,7 +16,7 @@ module.exports = {
       },
     },
     `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
+    { resolve: "gatsby-plugin-sharp", options: { failOnError: false } },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
